@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "mkdir -p dist && cp -r index.js package.json views public dist"
+    "build": "mkdir -p dist && cp -r index.js package.json views public dist",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
