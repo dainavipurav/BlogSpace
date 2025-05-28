@@ -1,5 +1,9 @@
 <div class="container my-4 card border-0">
-  <form action="" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+  <form
+    id="myForm"
+    class="p-4 p-md-5 border rounded-3 bg-body-tertiary"
+    method="post"
+  >
     <h4 class="mb-4">Create New Post</h4>
     <div class="container">
       <div class="mb-3">
@@ -8,6 +12,7 @@
           type="text"
           class="form-control"
           id="title"
+          name="title"
           placeholder="Enter post title"
         />
       </div>
@@ -16,6 +21,7 @@
         <textarea
           class="form-control"
           id="content"
+          name="content"
           placeholder="Write your post content here..."
           rows="3"
         ></textarea>
@@ -26,15 +32,46 @@
           type="text"
           class="form-control"
           id="imgUrl"
+          name="imgUrl"
           placeholder="Add image url here..."
         />
       </div>
 
+      <div class="mb-3">
+        <label for="authorName" class="form-label">Author Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="authorName"
+          name="authorName"
+          placeholder="Enter author name"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="authorImgUrl" class="form-label">Profile Image URL</label>
+        <input
+          type="text"
+          class="form-control"
+          id="authorImgUrl"
+          name="authorImgUrl"
+          placeholder="Add author image url here..."
+        />
+      </div>
+
       <div class="d-grid gap-2 d-sm-flex justify-content-sm mt-5">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg px-4 gap-3"
+          formaction="/publish"
+        >
           Publish
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4">
+        <button
+          type="submit"
+          class="btn btn-outline-secondary btn-lg px-4"
+          formaction="/save-draft"
+        >
           Save Draft
         </button>
       </div>
