@@ -1,4 +1,12 @@
 .profile-img {
-    height: 20px;
-    border-radius: 50%;
-  }
+  height: 20px;
+  border-radius: 50%;
+}
+
+.description-text {
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
