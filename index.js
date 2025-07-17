@@ -21,12 +21,12 @@ app.get("/about", (req, res) => {
 
 app.get("/my-posts", (req, res) => {
   //Step 1 - Make the get route work and render the index.ejs file.
-  res.render("my-posts.ejs", { currentPath: "/my-posts" });
+  res.render("my-posts.ejs", { currentPath: "/my-posts", posts: posts });
 });
 
 app.get("/form", (req, res) => {
   //Step 1 - Make the get route work and render the index.ejs file.
-  res.render("partials/form.ejs");
+  res.render("partials/form.ejs", { currentPath: "/form" });
 });
 
 app.post("/publish", (req, res) => {
