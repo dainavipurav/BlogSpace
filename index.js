@@ -3,7 +3,53 @@ import bodyParser from "body-parser";
 
 const app = express();
 const port = 3000;
-var posts = [];
+var posts = [
+  {
+    id: "1",
+    author_name: "John Doe",
+    author_image_url: "https://avatar.iran.liara.run/public/85",
+    creation_date: Date.now(),
+    modification_date: Date.now(),
+    post_title: "Exploring the Mountains",
+    post_description:
+      "Had an amazing trip hiking through the Rockies last weekend!",
+    post_image:
+      "https://www.bigfootdigital.co.uk/wp-content/uploads/2020/07/image-optimisation-scaled.jpg",
+  },
+  {
+    id: "2",
+    author_name: "Emily Carter",
+    author_image_url: "https://avatar.iran.liara.run/public/86",
+    creation_date: Date.now(),
+    modification_date: Date.now(),
+    post_title: "My Favorite Coffee Spots",
+    post_description:
+      "Sharing a list of cozy coffee shops I love to work from in NYC.",
+    post_image:
+      "https://www.bigfootdigital.co.uk/wp-content/uploads/2020/07/image-optimisation-scaled.jpg",
+  },
+  {
+    id: "3",
+    author_name: "Arjun Patel",
+    author_image_url: "https://avatar.iran.liara.run/public/87",
+    creation_date: Date.now(),
+    modification_date: Date.now(),
+    post_title: "JavaScript Tips & Tricks",
+    post_description: "A few useful JS patterns I've picked up over the years.",
+    post_image: "https://picsum.photos/seed/picsum/200/300",
+  },
+  {
+    id: "4",
+    author_name: "Sara Kim",
+    author_image_url: "https://avatar.iran.liara.run/public/88",
+    creation_date: Date.now(),
+    modification_date: Date.now(),
+    post_title: "Sunset Photography",
+    post_description:
+      "Captured these beautiful sunset shots at the beach yesterday.",
+    post_image: "https://picsum.photos/seed/picsum/200/300",
+  },
+];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -29,9 +75,24 @@ app.get("/form", (req, res) => {
   res.render("partials/form.ejs", { currentPath: "/form" });
 });
 
-app.post("/publish", (req, res) => {
+app.delete("/post", (req, res) => {
+  var id = req.query.id;
+
+  if (id) {
+    var index = posts.findIndex((e) => e.id.toString() == id.toString());
+    if (index === -1) {
+      return res.status(400).json({ message: "Id not found." });
+    }
+    posts.splice(index, 1);
+
+    res.sendStatus(200);
+  } else {
+    return res.status(400).json({ message: "Something went wrong." });
+  }
+});
+
+app.post("/post", (req, res) => {
   //Step 1 - Make the get route work and render the index.ejs file.
-  console.log("Publishing details..." + JSON.stringify(req.body));
 
   if (!validateDetails(req.body)) {
     return res
@@ -54,7 +115,7 @@ app.post("/publish", (req, res) => {
 
   posts.push(data);
 
-  res.render("index.ejs", { currentPath: "/", posts: posts });
+  res.redirect("/");
 });
 
 app.listen(port, () => {
