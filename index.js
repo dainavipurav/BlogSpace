@@ -75,10 +75,57 @@ app.get("/form", (req, res) => {
   res.render("partials/form.ejs", { currentPath: "/form" });
 });
 
-app.delete("/post", (req, res) => {
+app.get("/edit-form", (req, res) => {
   var id = req.query.id;
-
   if (id) {
+    var index = posts.findIndex((e) => e.id.toString() == id.toString());
+    if (index !== -1) {
+      return res.render("partials/edit-form.ejs", {
+        currentPath: "/edit-form",
+        post: posts[index],
+      });
+    }
+    return res.render("partials/edit-form.ejs", {
+      currentPath: "/edit-form",
+    });
+  }
+});
+
+app.post("/update-post", (req, res) => {
+  if (!validateDetails(req.body)) {
+    return res
+      .status(400)
+      .json({ message: "Please enter all mandatory details." });
+  }
+
+  if (req.query.id) {
+    var id = req.query.id;
+    var index = posts.findIndex((e) => e.id.toString() == id.toString());
+    if (index !== -1) {
+      var data = {
+        id: id,
+        author_name: req.body.authorName,
+        author_image_url: req.body.authorImgUrl,
+        creation_date: Date.now(),
+        modification_date: Date.now(),
+        post_title: req.body.title,
+        post_description: req.body.content,
+        post_image: req.body.imgUrl,
+      };
+
+      posts[index] = data;
+
+      return res.status(200).redirect("/");
+    }
+    return res.status(400).send("Item not found");
+  } else {
+    return res.status(404).send("Something went wrong");
+  }
+});
+
+app.delete("/post", (req, res) => {
+  if (req.query.id) {
+    var id = req.query.id;
     var index = posts.findIndex((e) => e.id.toString() == id.toString());
     if (index === -1) {
       return res.status(400).json({ message: "Id not found." });
